@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Ejemplo</title>
+
+<!-- 	<link rel="stylesheet" href="../static/estilo.css">
+ -->	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"></script>
+ -->
+	<!-- Font Awesome JS -->
+	<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+		integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
+	</script>
+	<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+		integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
+	</script>
+
+</head>
+
+<body class="color">
+	<div class="container">
+		<h1 class="text-center mt-5 mb-2" style="text-align: center;">LISTADO PERSONAS</h1>
+
+		<!-- Button para abrir el modal para nuevo registro-->
+		<div style="text-align: right">
+			<button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#nuevo"><i
+					class="fas fa-plus-square"></i> Nuevo</button>
+		</div>
+		<hr>
+
+		<!-- Tabla donde estaran los datos -->
+		<table class="table text-center" id="table" style="text-align: center; width: 100%">
+			<thead style="color: black;">
+				<tr>
+					<th>Id</th>
+					<th>Nombre</th>
+					<th>Direccion</th>
+					<th>Telefono</th>
+					<th>Tipo Persona</th>
+					<th>Operaciones</th>
+				</tr>
+			</thead>
+			<tbody id="tdatos">
+
+			</tbody>
+		</table>
+	</div>
+
+	<!--***************MODAL´S***************-->
+	<!--Modal para nuevo registro-->
+	<div class="modal" id="nuevo">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Agregar Usuario</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+
+					<!-- Nombre -->
+					<div class="form-group">
+						<label for="nombre">Nombre</label> <input type="text" name="nombre" id="nombre"
+							class="form-control" placeholder="Digite el nombre">
+					</div>
+
+					<!-- Direccion -->
+					<div class="form-group">
+						<label for="direccion">Direccion</label>
+						<textarea class="form-control" name="direccion" id="direccion" cols="30" rows="3"
+							placeholder="Digite la direccion"></textarea>
+					</div>
+
+					<!-- Telefono -->
+					<div class="form-group">
+						<label for="telefono">Telefono</label> <input type="text" name="telefono" id="telefono"
+							class="form-control" placeholder="Digite el telefono">
+					</div>
+
+					<!-- Tipo persona -->
+					<div class="form-group">
+						<label for="tipoPersona">Tipo persona</label>
+						<select name="tipoPersona" id="tSelect" class="form-control ">
+						</select>
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button id="btnGuardar" type="button" class="btn btn-success col-2" data-dismiss="modal"><i
+								class="fas fa-save"></i> Guardar</button>
+						<button type="reset" class="btn btn-secondary col-2" data-dismiss="modal"><i
+								class="fas fa-sign-out-alt"></i>
+							Cancelar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Modal para editar registro-->
+	<div class="modal" id="editar">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Editar registro</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+
+					<!-- ID -->
+					<div class="form-group">
+						<label for="id">Id</label> <input readonly="readonly" type="number" name="id" id="id2"
+							class="form-control">
+					</div>
+
+					<!-- Nombre -->
+					<div class="form-group">
+						<label for="nombre">Nombre</label> <input type="text" name="nombre" id="nombre2"
+							class="form-control" placeholder="Digite el nombre">
+					</div>
+
+					<!-- Direccion -->
+					<div class="form-group">
+						<label for="direccion">Direccion</label>
+						<textarea class="form-control" id="direccion2" cols="30" rows="3"
+							placeholder="Digite la direccion"></textarea>
+					</div>
+
+					<!-- Telefono -->
+					<div class="form-group">
+						<label for="telefono">Telefono</label> <input type="text" name="telefono" id="telefono2"
+							class="form-control" placeholder="Digite el telefono">
+					</div>
+
+					<!-- Tipo persona -->
+					<div class="form-group">
+						<label for="tipoPersona">Tipo persona</label>
+						<select name="tipoPersona2" id="tSelect2" class="form-control">
+						</select>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button id="btnActualizar" type="button" class="btn btn-success col-2" data-dismiss="modal"><i
+							class="fas fa-edit"></i> Actualizar</button>
+					<button type="button" class="btn btn-secondary col-2" data-dismiss="modal"><i
+							class="fas fa-sign-out-alt"></i> Cancelar</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal para eliminar registro -->
+	<div class="modal" id="eliminar">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Eliminar registro</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<h1>¿Esta seguro de eliminar el registro?</h1>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button id="btnEliminar" type="button" class="btn btn-danger ml-2 col-2" data-dismiss="modal"><i
+							class="fas fa-trash-alt"></i> SI</button>
+					<button type="button" class="btn btn-success ml-2 col-2" data-dismiss="modal"><i
+							class="fas fa-sign-out-alt"></i> NO</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!--***************SCRIPT´S***************-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<!-- 	<script src="https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"></script>
+ -->	
+	<script>
+		let persona = {
+			id: 0
+		};
+
+		function setIdPersona(id) {
+			persona.id = id;
+		}
+
+		$(document).ready(inicio);
+
+		//Cargando las funciones
+		function inicio() {
+			cargarSelect();
+			cargarSelect2();
+			cargarDatos();
+			dataTable();
+			$("#btnGuardar").click(guardar);
+			$("#btnEliminar").click(function () {
+				eliminar(persona.id);
+			});
+			$("#btnActualizar").click(modificar);
+		}
+
+		//Funcion para resetear inputs
+		function reset() {
+			$("#id").val(null);
+			$("#nombre").val(null);
+			$("#direccion").val("");
+			$("#direccion").text("");
+			$("#telefono").val(null);
+			$("#tipoPersona").val(null);
+
+			$("#id2").val(null);
+			$("#nombre2").val(null);
+			$("#direccion2").val("");
+			$("#direccion2").text("");
+			$("#telefono2").val(null);
+			$("#tSelect2").val(null);
+		}
+
+		//Funcion para cargar datos en tabla
+		function cargarDatos() {
+			$.ajax({
+				url: "/persona/all",
+				method: "Get",
+				success: function (response) {
+
+					$("#tdatos").html("");
+
+					for (let i = 0; i < response.length; i++) {
+
+						$("#tdatos")
+							.append("<tr>" +
+								"<td>" + response[i].id + "</td>" +
+								"<td>" + response[i].nombre + "</td>" +
+								"<td>" + response[i].direccion + "</td>" +
+								"<td>" + response[i].telefono + "</td>" +
+								"<td>" + response[i].tipoPersona.tipo + "</td>" +
+								"<td>" +
+								"<button onclick='cargarRegistro(" + response[i].id +
+								")'type='button' class='btn btn-warning ml-3 mt-1' data-toggle='modal' data-target='#editar'><i class='fas fa-edit'></i> Editar</button>" +
+								"<button onclick='setIdPersona(" + response[i].id +
+								");' type='button' class='btn btn-danger ml-3 mt-1' data-toggle='modal' data-target='#eliminar'><i class='fas fa-trash-alt'></i> Eliminar</button>" +
+								"</td>" +
+								"</tr>");
+					}
+				},
+				error: function (response) {
+					alert("Eror en la peticion: " + response);
+				}
+			});
+
+		}
+
+		//Funcion para cargar select de modal nuevo
+		function cargarSelect() {
+			$.ajax({
+				url: "/persona/select",
+				method: "Get",
+				success: function (response) {
+
+					var $select = $('#tSelect');
+
+					$.each(response, function (i) {
+						$select.append('<option value=' + response[i].id + '>' + response[i].tipo +
+							'</option>');
+					});
+				},
+				error: function (response) {
+					alert("Eror en la peticion: " + response);
+				}
+			});
+		}
+
+		//Funcion para cargar select de modal editar
+		function cargarSelect2() {
+
+			$.ajax({
+				url: "/persona/select",
+				method: "Get",
+				success: function (response) {
+
+					var $select = $('#tSelect2');
+
+					$.each(response, function (i) {
+						$select.append('<option value=' + response[i].id + '>' + response[i].tipo +
+							'</option>');
+					});
+				},
+			});
+		}
+
+		//Funcion para eviar data de nuevo registro y guardar
+		function guardar() {
+			$.ajax({
+				url: "/persona/saveOrUpdate",
+				method: "Post",
+				data: {
+					id: null, //PARA GUARDAR EL id TIENE QUE IR NULO
+					nombre: $("#nombre").val(),
+					direccion: $("#direccion").val(),
+					telefono: $("#telefono").val(),
+					tipoPersona: $("#tSelect").val()
+				},
+				success: function (response) {
+					reset();
+					cargarDatos();
+				},
+				error: function (response) {
+					alert("Error en la peticion " + response);
+				}
+			});
+		}
+
+		//Funcion para eliminar registro
+		function eliminar(id) {
+			$.ajax({
+				url: "/persona/delete/" + id,
+				method: "Get",
+				success: function (response) {
+					cargarDatos();
+				},
+				error: function (response) {
+					alert("Error en la peticion " + response);
+				}
+			});
+		}
+
+		//Funcion para cargar registro en modal editar
+		function cargarRegistro(id) {
+			$.ajax({
+				url: "/persona/get/" + id,
+				method: "Get",
+				success: function (response) {
+					$("#id2").val(response.id);
+					$("#nombre2").val(response.nombre);
+					$("#direccion2").val(response.direccion);
+					$("#telefono2").val(response.telefono);
+					$("#tSelect2").val(response.tipoPersona.id);
+				},
+				error: function (response) {
+					alert("Error " + response);
+				}
+			});
+		}
+
+		//Funcion para modificar registro
+		function modificar() {
+			$.ajax({
+				url: "/persona/saveOrUpdate",
+				method: "Post",
+				data: {
+					id: $("#id2").val(),
+					nombre: $("#nombre2").val(),
+					direccion: $("#direccion2").val(),
+					telefono: $("#telefono2").val(),
+					tipoPersona: $("#tSelect2").val(),
+				},
+				success: function (response) {
+					cargarDatos();
+					reset();
+				},
+				error: function (response) {
+					alert("Error en la peticion " + response);
+				}
+			});
+		}
+
+		//Funcion para Data Table
+		function dataTable() {
+			$("#table").DataTable({
+					/*"language": {
+						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+					},*/
+				});
+		}
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+        integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
+    </script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+        integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar navbar-dark bg-primary">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="file:///C:/Users/carlos.lemusfgkah/Desktop/Prueba/especialidadIndex.html"
+                            style="color: black;"><strong>
+                                <h3>Especialidades</h3>
+                            </strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="file:///C:/Users/carlos.lemusfgkah/Desktop/Prueba/doctorIndex.html"
+                            style="color:
+                        black;"><strong>
+                                <h3>Doctores</h3>
+                            </strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="file:///C:/Users/carlos.lemusfgkah/Desktop/Prueba/pacienteIndex.html"
+                            style="color:
+                        black;"><strong>
+                                <h3>Pacientes</h3>
+                            </strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="file:///C:/Users/carlos.lemusfgkah/Desktop/Prueba/consultaIndex.html" style="color:
+                        black;"><strong>
+                                <h3>Consultas</h3>
+                            </strong></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container text-center">
+        <h1 class="text-center mt-2"><strong>Consulta</strong> </h1>
+        <div class="form-group row">
+            <label for="inputName" class="col-sm-1 col-form-label"><strong>Fecha</strong> </label>
+            <div class="col-sm-5">
+                <input type="date" class="form-control" name="fecha" id="fecha">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputName" class="col-sm-1 col-form-label"><strong>Doctor</strong> </label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="doctor" id="doctor" readonly="readonly">
+            </div>
+            <button id="buscarDoctor" type="button" class="btn btn-primary" data-toggle="modal"
+                data-target="#ModalDoctor"><i style='color: black' class="fas fa-search-plus"></i>
+                <strong style='color: black'>Buscar</strong>
+            </button>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputName" class="col-sm-1 col-form-label"><strong>Paciente</strong> </label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" name="paciente" id="paciente" readonly="readonly">
+            </div>
+            <button id="buscarPaciente" type="button" class="btn btn-primary" data-toggle="modal"
+                data-target="#ModalPaciente"><i style='color: black' class="fas fa-search-plus"></i>
+                <strong style='color: black'>Buscar</strong>
+            </button>
+        </div>
+
+        <hr>
+        <h3 class="text-center"><strong>Detalles de la consulta</strong> </h3>
+        <hr>
+        <div class="form-group row">
+            <label for="sintoma" class="col-md-2 text-center"><strong>Sintoma</strong></label>
+            <input id="sintoma" class="form-control col-md-8" type="text">
+            <button id="agregarSintoma" type="button" class="btn btn-success ml-2"><i style='color: black'
+                    class="fas fa-plus"></i><strong style='color: black'>Agregar</strong></button>
+        </div>
+        <hr>
+        <table class="table text-center" id="detalles">
+            <thead class="bg-primary" style="color: black;">
+                <tr>
+                    <th>Sintomas</th>
+                    <th>Operaciones</th>
+                </tr>
+            </thead>
+            <tbody id="tDetalles">
+
+            </tbody>
+        </table>
+
+        <br>
+
+        <h4><strong>Diagnostico</strong></h4>
+        <textarea class="form-control" rows="5" id="comment"></textarea>
+        <br>
+        <div style="text-align: right;">
+            <button type="button" id="guardarConsulta" class="btn btn-success"><i class="fas fa-save"
+                    style="color: black;"></i> <strong style='color: black'>Guardar</strong></button>
+
+            <button class="btn btn-danger" style="color: black;"
+                onclick="location.href='file:///C:/Users/carlos.lemusfgkah/Desktop/Prueba/consultaIndex.html'"><i
+                    class="fas fa-plus-square" style='color: black'></i> <strong
+                    style='color: black'>Cancelar</strong></button>
+
+        </div>
+
+        <!--Modales-->
+        <!--  Modal Para seleccionar doctor-->
+        <!-- The Modal -->
+        <div class="modal fade" id="ModalDoctor">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Listado de doctores</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <table class="table table-hover" id="doctores">
+                            <thead class="bg-primary" style="color: black;">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Direccion</th>
+                                    <th>Especialidad</th>
+                                    <th>Operaciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="datosDoctor">
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-sign-out-alt"
+                                style="color: black;"></i><strong style="color: black;">Cancelar</strong></button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--  Modal Para seleccionar paciente-->
+        <!-- The Modal -->
+        <div class="modal fade" id="ModalPaciente">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Listado de pacientes</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <table class="table table-hover" id="pacientes">
+                            <thead class="bg-primary" style="color: black;">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Direccion</th>
+                                    <th>Operaciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="datosPaciente">
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-sign-out-alt"
+                                style="color: black;"></i><strong style="color: black;">Cancelar</strong></button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="js/ConsultaDetalle.js"></script>
+</body>
+
+</html>

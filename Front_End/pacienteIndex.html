@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+        integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous">
+    </script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+        integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
+    </script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar navbar-dark bg-primary">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="file:///C:/Users/carlos.lemusfgkah/Desktop/Prueba/especialidadIndex.html"
+                            style="color: black;"><strong>
+                                <h3>Especialidades</h3>
+                            </strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="file:///C:/Users/carlos.lemusfgkah/Desktop/Prueba/doctorIndex.html"
+                            style="color:
+                        black;"><strong>
+                                <h3>Doctores</h3>
+                            </strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="file:///C:/Users/carlos.lemusfgkah/Desktop/Prueba/pacienteIndex.html"
+                            style="color:
+                        black;"><strong>
+                                <h3>Pacientes</h3>
+                            </strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="file:///C:/Users/carlos.lemusfgkah/Desktop/Prueba/consultaIndex.html" style="color:
+                        black;"><strong>
+                                <h3>Consultas</h3>
+                            </strong></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <h1 class="text-center mt-5 mb-2" style="text-align: center;">LISTADO DE PACIENTES</h1>
+        <!-- Button para abrir el modal para nuevo registro-->
+        <div style="text-align: left">
+            <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#nuevo"><i
+                    class="fas fa-plus-square" style='color: black'></i> <strong style='color: black'>Nuevo
+                    registro</strong></button>
+        </div>
+        <hr>
+        <table class="table table-striped text-center" id="table" style="width: 100%">
+            <thead class="bg-primary" style="color: black;">
+                <tr>
+                    <th>
+                        <h5>ID</h5>
+                    </th>
+                    <th>
+                        <h5>Nombre</h5>
+                    </th>
+                    <th>
+                        <h5>Direccion</h5>
+                    </th>
+                    <th>
+                        <h5>Opciones</h5>
+                    </th>
+                </tr>
+            <tbody id="datos">
+
+            </tbody>
+            </thead>
+        </table>
+    </div>
+
+    <!--***************MODAL´S***************-->
+    <!--Modal para nuevo registro-->
+    <div class="modal" id="nuevo">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title" style="color: black;">Agregar registro</h4>
+                    <button type="button" class="close" data-dismiss="modal" style="color: white;">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <!-- Nombre -->
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label> <input type="text" name="nombre" id="nombre"
+                            class="form-control" placeholder="Digite el nombre">
+                    </div>
+
+                    <!-- Direccion -->
+                    <div class="form-group">
+                        <label for="direccion">Direccion</label>
+                        <textarea class="form-control" name="direccion" id="direccion" cols="30" rows="3"
+                            placeholder="Digite la direccion"></textarea>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button id="btnGuardar" type="button" class="btn btn-success col-2" data-dismiss="modal"><i
+                                class="fas fa-save" style="color: black;"></i><strong
+                                style="color: black;">Guardar</strong></button>
+                        <button id="btnCancelar" type="reset" class="btn btn-secondary col-2" data-dismiss="modal"><i
+                                class="fas fa-sign-out-alt" style="color: black;"></i><strong
+                                style="color: black;">Cancelar</strong></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal para editar registro-->
+    <div class="modal" id="editar">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title" style="color: black;">Editar registro</h4>
+                    <button type="button" class="close" data-dismiss="modal" style="color: white;">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <!-- ID -->
+                    <div class="form-group">
+                        <input readonly="readonly" type="hidden" name="id" id="id2" class="form-control">
+                    </div>
+
+                    <!-- Nombre -->
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label> <input type="text" name="nombre" id="nombre2"
+                            class="form-control" placeholder="Digite el nombre">
+                    </div>
+
+                    <!-- Direccion -->
+                    <div class="form-group">
+                        <label for="direccion">Direccion</label>
+                        <textarea class="form-control" id="direccion2" cols="30" rows="3"
+                            placeholder="Digite la direccion"></textarea>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="btnActualizar" type="button" class="btn btn-success col-2" data-dismiss="modal"><i
+                            class="fas fa-edit" style="color: black;"></i><strong
+                            style="color: black;">Actualizar</strong></button>
+                    <button id="btnCancelar" type="button" class="btn btn-secondary col-2" data-dismiss="modal"><i
+                            class="fas fa-sign-out-alt" style="color: black;"></i><strong
+                            style="color: black;">Cancelar</strong></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para eliminar registro -->
+    <div class="modal" id="eliminar">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header bg-danger">
+                    <h4 class="modal-title" style="color: black;">Eliminar registro</h4>
+                    <button type="button" class="close" data-dismiss="modal" style="color: white;">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <h1 style="color: red;">¿Esta seguro de eliminar el registro?</h1>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="btnEliminar" type="button" class="btn btn-danger ml-2 col-2" data-dismiss="modal"><i
+                            class="fas fa-trash-alt" style="color: black;"></i><strong
+                            style="color: black;">SI</strong></button>
+                    <button type="button" class="btn btn-success ml-2 col-2" data-dismiss="modal"><i
+                            class="fas fa-sign-out-alt" style="color: black;"></i><strong
+                            style="color: black;">NO</strong></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="js/Paciente.js"></script>
+
+</body>
+
+</html>
