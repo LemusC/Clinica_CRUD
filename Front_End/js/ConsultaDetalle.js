@@ -1,36 +1,117 @@
-$(document).ready(inicio)
+let paciente = {
+    id: 0,
+    nombre: ""
+};
 
-function inicio() {
-    $("#buscarDoctor").click(cargarDoctores);
-    $("#buscarPaciente").click(cargarPacientes);
-    $("#agregarSintoma").click(agregarDetalle);
+let doctor = {
+    id: 0,
+    nombre: ""
+};
+
+$(document).ready(function () {
+
     resetDetalles();
+    cargarPacientes();
+    cargarDoctores();
+    $("#agregarSintoma").click(agregarDetalle);
 
-    $("#doctores").dataTable({
-        ajax:{
-            url: "http://localhost:8080/doctor/all",
-                method: "Get"
+    $("body").on('click', '.agregarPaciente', function () {
+
+        agregarPaciente($(this).parent().parent().children('td:eq(0)').text(), $(this).parent().parent().children('td:eq(1)').text());
+    });
+
+    $("body").on('click', '.agregarDoctor', function () {
+
+        agregarDoctor($(this).parent().parent().children('td:eq(0)').text(), $(this).parent().parent().children('td:eq(1)').text());
+    });
+});
+
+function cargarPacientes() {
+    $("#pacientes").DataTable({
+
+        "ajax": {
+            "url": "http://localhost:8080/consulta/getPacientes",
+            "method": "Get"
         },
-        columns: [
-            {
-                data: "id",
-                width: "20%"
+        "columns": [{
+                "data": "id",
+                "width": "5%"
             },
             {
-                data: "nombre",
-                width: "20%"
+                "data": "nombre",
+                "width": "30%"
             },
             {
-                data: "direccion",
-                width: "20%"
+                "data": "direccion",
+                "width": "40%"
             },
             {
-                data: "id",
-                width: "20%"
+                "data": "operacion",
+                "width": "10%"
             }
-        ]
-        
-    })
+        ],
+        "scrollY": 200,
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ ",
+            "zeroRecords": "Datos no encontrados",
+            "info": "Mostar páginas _PAGE_ de _PAGES_",
+            "infoEmpty": "Datos no encontrados",
+            "infoFiltered": "(Filtrados por _MAX_ total registros)",
+            "search": "Buscar:",
+            "paginate": {
+                "first": "Primero",
+                "last": "Anterior",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    });
+}
+
+function cargarDoctores() {
+    $("#doctores").DataTable({
+
+        "ajax": {
+            "url": "http://localhost:8080/consulta/getDoctores",
+            "method": "Get"
+        },
+        "columns": [{
+                "data": "id",
+                "width": "5%"
+            },
+            {
+                "data": "nombre",
+                "width": "30%"
+            },
+            {
+                "data": "direccion",
+                "width": "30%"
+            },
+            {
+                "data": "especialidad",
+                "width": "30%"
+            },
+            {
+                "data": "operacion",
+                "width": "5%"
+            }
+        ],
+        "scrollY": 200,
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ ",
+            "zeroRecords": "Datos no encontrados",
+            "info": "Mostar páginas _PAGE_ de _PAGES_",
+            "infoEmpty": "Datos no encontrados",
+            "infoFiltered": "(Filtrados por _MAX_ total registros)",
+            "search": "Buscar:",
+            "paginate": {
+                "first": "Primero",
+                "last": "Anterior",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    });
 }
 
 function resetDetalles() {
@@ -81,49 +162,18 @@ function errorPeticion(response) {
     console.log(response);
 }
 
-function cargarDoctores() {
-    $.ajax({
-        url: "http://localhost:8080/doctor/all",
-        method: "Get",
-        data: null,
-        success: function (response) {
-            $("#datosDoctor").html("");
+function agregarPaciente(id, nombre) {
 
-            response.forEach(i => {
-                $("#datosDoctor").append("<tr>" +
-                    "<td><strong>" + i.id + "</strong></td>" +
-                    "<td><strong>" + i.nombre + "</strong></td>" +
-                    "<td><strong>" + i.direccion + "</strong></td>" +
-                    "<td><strong>" + i.especialidad.especialidad + "</strong></td>" +
-                    "<td><button  class='btn btn-success' data-dismiss='modal'><i style='color: black'class = 'fas fa-plus'></i><strong style='color: black'>Agregar</strong></button></td > " +
-                    "</tr>")
-            })
-        },
-        error: function () {
-            alert("Error");
-        }
-    });
-};
+    paciente.id = id;
+    paciente.nombre = nombre;
 
-function cargarPacientes() {
-    $.ajax({
-        url: "http://localhost:8080/paciente/all",
-        method: "Get",
-        data: null,
-        success: function (response) {
-            $("#datosPaciente").html("");
+    $("#paciente").val(nombre);
+}
 
-            response.forEach(i => {
-                $("#datosPaciente").append("<tr>" +
-                    "<td><strong>" + i.id + "</strong></td>" +
-                    "<td><strong>" + i.nombre + "</strong></td>" +
-                    "<td><strong>" + i.direccion + "</strong></td>" +
-                    "<td><button  class='btn btn-success' data-dismiss='modal'><i style='color: black'class ='fas fa-plus'></i><strong style='color: black'>Agregar</strong></button></td>" +
-                    "</tr>")
-            })
-        },
-        error: function () {
-            alert("Error");
-        }
-    });
-};
+function agregarDoctor(id, nombre) {
+
+    doctor.id = id;
+    doctor.nombre = nombre;
+
+    $("#doctor").val(nombre);
+}

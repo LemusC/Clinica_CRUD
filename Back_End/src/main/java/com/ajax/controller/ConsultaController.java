@@ -2,11 +2,16 @@ package com.ajax.controller;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 import com.ajax.model.Consulta;
 import com.ajax.model.DetallesConsulta;
+import com.ajax.model.Doctor;
+import com.ajax.model.Paciente;
+import com.ajax.repository.IDoctorRepository;
+import com.ajax.repository.IPacienteRepository;
 import com.ajax.services.ConsultaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,22 +36,75 @@ public class ConsultaController {
     @Autowired
     ConsultaService daoConsulta;
 
+    @Autowired
+    IPacienteRepository rPaciente;
+
+    @Autowired
+    IDoctorRepository rDoctor;
+
     public static List<DetallesConsulta> detalles = new ArrayList<>();
 
     public ConsultaController() {
         detalles = new ArrayList<>();
     }
 
+    @GetMapping(value = "getDoctores", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @CrossOrigin
+    public Object getDoctores() {
+        List<HashMap<String, Object>> registros = new ArrayList<>();
+
+        List<Doctor> l = (List<Doctor>) rDoctor.findAll();
+
+        for (Doctor doctor : l) {
+            HashMap<String, Object> object = new HashMap<>();
+
+            object.put("id", doctor.getId());
+            object.put("nombre", doctor.getNombre());
+            object.put("direccion", doctor.getDireccion());
+            object.put("especialidad", doctor.getEspecialidad().getEspecialidad());
+            object.put("operacion",
+                    "<button type='button' class='btn btn-primary agregarDoctor' data-dismiss='modal'><i style='color: black' class='fas fa-plus'></i><strong style='color: black'>Agregar</strong></button>");
+
+            registros.add(object);
+        }
+
+        return Collections.singletonMap("data", registros);
+    }
+
+    @GetMapping(value = "getPacientes", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @CrossOrigin
+    public Object getPacientes() {
+        List<HashMap<String, Object>> registros = new ArrayList<>();
+
+        List<Paciente> l = (List<Paciente>) rPaciente.findAll();
+
+        for (Paciente paciente : l) {
+            HashMap<String, Object> object = new HashMap<>();
+
+            object.put("id", paciente.getId());
+            object.put("nombre", paciente.getNombre());
+            object.put("direccion", paciente.getDireccion());
+            object.put("operacion",
+                    "<button type='button' class='btn btn-primary agregarPaciente' data-dismiss='modal'><i style='color: black' class='fas fa-plus'></i><strong style='color: black'>Agregar</strong></button>");
+
+            registros.add(object);
+        }
+
+        return Collections.singletonMap("data", registros);
+    }
+
     @PostMapping(value = "agregarDetalle", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Object agregarDetalle(@RequestParam String sintoma) {
-        //CREANDO OBJETO DE DETALLE
+        // CREANDO OBJETO DE DETALLE
         DetallesConsulta entity = new DetallesConsulta();
         HashMap<String, String> json = new HashMap<String, String>();
 
         entity.setSintoma(sintoma);
 
-        //AGREGANDO OBJETO DETALLE A LA LISTA
+        // AGREGANDO OBJETO DETALLE A LA LISTA
 
         try {
             detalles.add(entity);
@@ -60,7 +118,7 @@ public class ConsultaController {
 
             return json;
         }
-        
+
     }
 
     @GetMapping(value = "detalles", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -76,10 +134,10 @@ public class ConsultaController {
         return "lista reseteada";
     }
 
-    /* @GetMapping(value = "index")
-    public String listaConsultas() {
-        return new String("views/Consulta/consultaIndex");
-    } */
+    /*
+     * @GetMapping(value = "index") public String listaConsultas() { return new
+     * String("views/Consulta/consultaIndex"); }
+     */
 
     @GetMapping(value = "all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
