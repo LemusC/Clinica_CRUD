@@ -96,6 +96,32 @@ public class ConsultaController {
         return Collections.singletonMap("data", registros);
     }
 
+    @GetMapping(value = "getConsultas", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @CrossOrigin
+    public Object getAll() {
+        List<HashMap<String, Object>> registros = new ArrayList<>();
+
+        List<Consulta> l = (List<Consulta>) daoConsulta.getAll();
+
+        for (Consulta consulta : l) {
+            HashMap<String, Object> object = new HashMap<>();
+
+            object.put("id", consulta.getId());
+            object.put("paciente", consulta.getPaciente().getNombre());
+            object.put("sintomas", consulta.getDetalles_Consultas());
+            object.put("diagnostico", consulta.getDiagnostico());
+            object.put("doctor", consulta.getDoctor().getNombre());
+            object.put("fecha", consulta.getFecha());
+            object.put("operacion",
+                    "<button type='button' class='btn btn-primary agregarPaciente' data-dismiss='modal'><i style='color: black' class='fas fa-plus'></i><strong style='color: black'>Agregar</strong></button>");
+
+            registros.add(object);
+        }
+
+        return Collections.singletonMap("data", registros);
+    }
+
     @PostMapping(value = "agregarDetalle", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Object agregarDetalle(@RequestParam String sintoma) {
@@ -140,11 +166,11 @@ public class ConsultaController {
      * String("views/Consulta/consultaIndex"); }
      */
 
-    @GetMapping(value = "all", produces = MediaType.APPLICATION_JSON_VALUE)
+    /* @GetMapping(value = "all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Consulta> getAllDoctor() {
         return (List<Consulta>) daoConsulta.getAll();
-    }
+    } */
 
     // GUARDAR
     /*
@@ -194,13 +220,11 @@ public class ConsultaController {
         entity.setDetalles_Consultas(detalles);
 
         try {
-            daoConsulta.save(entity);
+            daoConsulta.saveOrUpdate(entity);
             return true;
         } catch (Exception e) {
-            // TODO: handle exception
             return false;
         }
-
     }
 
     // ELIMINAR

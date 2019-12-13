@@ -9,12 +9,12 @@ $(document).ready(inicio);
 
 //FUNCION INICIO
 function inicio() {
-    cargarDatos();
+    cargarConsultas();
     cargarSelectDoctor();
     cargarSelectPaciente();
     cargarSelectDoctor2();
     cargarSelectPaciente2();
-    $("#btnGuardar").click(guardar);
+    //$("#btnGuardar").click(guardar);
     $("#btnEliminar").click(function () {
         eliminar(consulta.id);
     });
@@ -34,8 +34,62 @@ function reset() {
     $("#diagnostico2").text("");
 }
 
+function cargarConsultas() {
+    $("#tablaConsultas").DataTable({
+
+        "ajax": {
+            "url": "http://localhost:8080/consulta/getConsultas",
+            "method": "Get"
+        },
+        "columns": [{
+                "data": "id",
+                "width": "5%"
+            },
+            {
+                "data": "paciente",
+                "width": "20%"
+            },
+            {
+                "data": "sintomas",
+                "width": "20%"
+            },
+            {
+                "data": "diagnostico",
+                "width": "20%"
+            },
+            {
+                "data": "doctor",
+                "width": "20%"
+            },
+            {
+                "data": "fecha",
+                "width": "10%"
+            },
+            {
+                "data": "operacion",
+                "width": "5%"
+            }
+        ],
+        "scrollY": 200,
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ ",
+            "zeroRecords": "Datos no encontrados",
+            "info": "Mostar páginas _PAGE_ de _PAGES_",
+            "infoEmpty": "Datos no encontrados",
+            "infoFiltered": "(Filtrados por _MAX_ total registros)",
+            "search": "Buscar:",
+            "paginate": {
+                "first": "Primero",
+                "last": "Anterior",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        }
+    });
+}
+
 //CARGANDO DATOS A TABLA ESPECIALIDADES
-function cargarDatos() {
+/* function cargarDatos() {
     $.ajax({
         url: "http://localhost:8080/consulta/all",
         method: "Get",
@@ -48,7 +102,7 @@ function cargarDatos() {
                     "<tr>" +
                     "<td><strong>" + response[i].id + "</strong></td>" +
                     "<td><strong>" + response[i].paciente.nombre + "</strong></td>" +
-                    "<td><strong>" + response[i].sintomas + "</strong></td>" +
+                    "<td><strong>" + response[i].detalle+ "</strong></td>" +
                     "<td><strong>" + response[i].diagnostico + "</strong></td>" +
                     "<td><strong>" + response[i].doctor.nombre + "</strong></td>" +
                     "<td><strong>" + response[i].fecha + "</strong></td>" +
@@ -66,7 +120,7 @@ function cargarDatos() {
             alert("Error");
         }
     });
-};
+}; */
 
 //Funcion para cargar select de modal nuevo
 function cargarSelectDoctor() {
@@ -142,7 +196,7 @@ function cargarSelectPaciente2() {
     });
 }
 
-function guardar() {
+/* function guardar() {
     $.ajax({
         url: "http://localhost:8080/consulta/save",
         method: "Get",
@@ -161,7 +215,7 @@ function guardar() {
             alert("Error en la peticion " + response);
         }
     })
-}
+} */
 
 function eliminar(id) {
     $.ajax({

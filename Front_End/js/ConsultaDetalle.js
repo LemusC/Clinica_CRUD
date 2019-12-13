@@ -192,7 +192,7 @@ function guardar() {
         },
         success: function (response) {
                 alert("CONSULTA GUARDADA CORRECTAMENTE...");
-                location.reload();
+                location.reload(); //para recargar la página
             },
             error: function (response) {
                 alert("CONSULTA NO GUARDADA ...");
