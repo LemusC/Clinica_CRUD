@@ -1,6 +1,6 @@
 package com.ajax.controller;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,6 +15,7 @@ import com.ajax.repository.IPacienteRepository;
 import com.ajax.services.ConsultaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -146,33 +147,60 @@ public class ConsultaController {
     }
 
     // GUARDAR
-    @GetMapping(value = "save")
+    /*
+     * @GetMapping(value = "save")
+     * 
+     * @ResponseBody public HashMap<String, String> save(@RequestParam Date
+     * fecha, @RequestParam String diagnostico,
+     * 
+     * @RequestParam Integer idDoctor, @RequestParam Integer idPaciente) {
+     * 
+     * Consulta consulta = new Consulta(); HashMap<String, String> jsonReturn = new
+     * HashMap<>();
+     * 
+     * consulta.setFecha(fecha); consulta.setDiagnostico(diagnostico);
+     * consulta.setDoctor(daoConsulta.getDoctor(idDoctor));
+     * consulta.setPaciente(daoConsulta.getPaciente(idPaciente));
+     * 
+     * try { daoConsulta.saveOrUpdate(consulta);
+     * 
+     * jsonReturn.put("Estado", "OK"); jsonReturn.put("Mensaje",
+     * "Registro guardado");
+     * 
+     * return jsonReturn; } catch (Exception e) {
+     * 
+     * jsonReturn.put("Estado", "Error"); jsonReturn.put("Mensaje",
+     * "Registro no guardado" + e.getMessage());
+     * 
+     * return jsonReturn; } }
+     */
+
+    @PostMapping(value = "save")
     @ResponseBody
-    public HashMap<String, String> save(@RequestParam Date fecha, @RequestParam String diagnostico,
+    @CrossOrigin
+    public Boolean save(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date fecha, @RequestParam String diagnostico,
             @RequestParam Integer idDoctor, @RequestParam Integer idPaciente) {
 
-        Consulta consulta = new Consulta();
-        HashMap<String, String> jsonReturn = new HashMap<>();
+        Consulta entity = new Consulta();
+        entity.setDoctor(daoConsulta.getDoctor(idDoctor));
+        entity.setPaciente(daoConsulta.getPaciente(idPaciente));
+        entity.setDiagnostico(diagnostico);
+        entity.setFecha(fecha);
 
-        consulta.setFecha(fecha);
-        consulta.setDiagnostico(diagnostico);
-        consulta.setDoctor(daoConsulta.getDoctor(idDoctor));
-        consulta.setPaciente(daoConsulta.getPaciente(idPaciente));
+        for (DetallesConsulta detalleConsulta : detalles) {
+            detalleConsulta.setConsulta(entity);
+        }
+
+        entity.setDetalles_Consultas(detalles);
 
         try {
-            daoConsulta.saveOrUpdate(consulta);
-
-            jsonReturn.put("Estado", "OK");
-            jsonReturn.put("Mensaje", "Registro guardado");
-
-            return jsonReturn;
+            daoConsulta.save(entity);
+            return true;
         } catch (Exception e) {
-
-            jsonReturn.put("Estado", "Error");
-            jsonReturn.put("Mensaje", "Registro no guardado" + e.getMessage());
-
-            return jsonReturn;
+            // TODO: handle exception
+            return false;
         }
+
     }
 
     // ELIMINAR

@@ -40,6 +40,17 @@ public class ConsultaService {
         }
     }
 
+    public Boolean save(Consulta entity) {
+        try {
+            rConsulta.save(entity);
+            return true;
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.err.println("Error: " + e.getMessage());
+            return false;
+        }
+    }
+
     public Boolean delete(Consulta entity) {
         try {
             rConsulta.delete(entity);

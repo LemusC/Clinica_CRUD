@@ -14,6 +14,7 @@ $(document).ready(function () {
     cargarPacientes();
     cargarDoctores();
     $("#agregarSintoma").click(agregarDetalle);
+    $("#guardarConsulta").click(guardar);
 
     $("body").on('click', '.agregarPaciente', function () {
 
@@ -176,4 +177,25 @@ function agregarDoctor(id, nombre) {
     doctor.nombre = nombre;
 
     $("#doctor").val(nombre);
+}
+
+function guardar() {
+    $.ajax({
+        url: "http://localhost:8080/consulta/save",
+        method: "Post",
+        data:
+        {
+            fecha: $("#fecha").val(),
+            idDoctor: doctor.id,
+            idPaciente: paciente.id,
+            diagnostico: $("#diagnostico").val()
+        },
+        success: function (response) {
+                alert("CONSULTA GUARDADA CORRECTAMENTE...");
+                location.reload();
+            },
+            error: function (response) {
+                alert("CONSULTA NO GUARDADA ...");
+            }
+    })
 }

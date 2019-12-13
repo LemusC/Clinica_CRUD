@@ -1,5 +1,6 @@
 package com.ajax.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ public class DetallesConsulta {
 
     private String sintoma;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.REMOVE, optional = false, fetch = FetchType.EAGER)
     private Consulta consulta;
 
     public Integer getId() {

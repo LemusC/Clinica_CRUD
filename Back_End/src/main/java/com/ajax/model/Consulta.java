@@ -1,13 +1,16 @@
 package com.ajax.model;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -20,10 +23,8 @@ public class Consulta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Integer id;
 
-    @NotNull
     private Date fecha;
 
     @NotNull
@@ -36,6 +37,17 @@ public class Consulta {
     @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
     private Paciente paciente;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "consulta")
+    private List<DetallesConsulta> detalles_Consultas;
+
+    public List<DetallesConsulta> getDetalles_Consultas() {
+        return this.detalles_Consultas;
+    }
+
+    public void setDetalles_Consultas(List<DetallesConsulta> detalles_Consultas) {
+        this.detalles_Consultas = detalles_Consultas;
+    }
 
     public Integer getId() {
         return this.id;
